@@ -1,0 +1,7 @@
+
+#game-board {
+    position: fixed;
+    width: 65%; 
+    height: 100%;
+    left: 0;  
+}
