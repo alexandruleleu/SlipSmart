@@ -1,8 +1,16 @@
 import {Snake} from './snake';
+import { BotSnake } from './botSnake';
+import { PlayerSnake } from './playerSnake';
 
-export class SlipSmart extends Phaser.State {
+export class SlipSmartGame {
 
+    game: any;
     snakes: any;
+
+    constructor(game: any) {
+        this.game = game;
+        this.snakes = [];
+    }
 
     preload() {
         this.game.load.image('circle','assets/circle.png');
@@ -10,28 +18,28 @@ export class SlipSmart extends Phaser.State {
     }
 
     create() {
-        var width = this.game.width;
-        var height = this.game.height;
-
+        console.log(this.game);
+        let width = this.game.width;
+        let height = this.game.height;
         this.game.world.setBounds(-width, -height, width*2, height*2);
     	this.game.stage.backgroundColor = '#444';
 
         //add tilesprite background
-        var background = this.game.add.tileSprite(-width, -height,
-            this.game.world.width, this.game.world.height, 'background');
+        let background = this.game.add.tileSprite(-width, -height, this.game.world.width, this.game.world.height, 'background');
 
         //initialize physics and groups
         this.game.physics.startSystem(Phaser.Physics.P2JS);
 
-        this.snakes = [];
-
         //create player
-        var snake = new Snake(this.game, 'circle', 0, 0);
+        var snake = new PlayerSnake(this, 'circle', 0, 0);
         this.game.camera.follow(snake.head);
+
+        new BotSnake(this, 'circle', -200, 0);
+        new BotSnake(this, 'circle', 200, 0);
     }
 
     /**
-     * Main update loop
+     * Main update loop - update each player(snake) !!!
      */
     update() {
         //update game components

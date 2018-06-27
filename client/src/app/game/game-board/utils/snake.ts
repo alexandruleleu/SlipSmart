@@ -1,13 +1,18 @@
 import {Util} from './utils';
+import { SlipSmartGame } from 'app/game/game-board/utils/game';
 export class Snake {
 
+    game: any;
+    snakes: any;
+    spriteKey: string;
+
     debug: any;
-    snakeLength: any;
-    scale: any;
-    fastSpeed: any;
-    slowSpeed: any;
-    speed: any;
-    rotationSpeed: any;
+    snakeLength: number;
+    scale: number;
+    fastSpeed: number;
+    slowSpeed: number;
+    speed: number;
+    rotationSpeed: number;
     collisionGroup: any;
     sections: any;
     headPath: any;
@@ -20,8 +25,10 @@ export class Snake {
     onDestroyedCallbacks: any;
     onDestroyedContexts: any;
 
-    constructor(private game: any, private spriteKey: string, private x: number, private y: number ) {
+    constructor(game: SlipSmartGame, spriteKey: string, x: number, y: number ) {
         this.game = game;
+        console.log(this.game);
+
         //create an array of snakes in the game object and add this snake
         if (!this.game.snakes) {
             this.game.snakes = [];
@@ -54,7 +61,7 @@ export class Snake {
         this.head = this.addSectionAtPosition(x,y);
         this.head.name = "head";
         this.head.snake = this;
-    
+        console.log(this.head);
         this.lastHeadPosition = new Phaser.Point(this.head.body.x, this.head.body.y);
         //add 30 sections behind the head
         this.initSections(30);
@@ -100,8 +107,10 @@ export class Snake {
     addSectionsAfterLast(amount) {
         this.queuedSections += amount;
     }
+
+
     /**
-     * Call from the main update loop
+     * Call from the SlipSmart class -- main update function
      */
     update() {
         var speed = this.speed;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Game, AUTO } from 'phaser-ce';
-import { SlipSmart } from './utils/game'; 
+import { SlipSmartGame } from './utils/game'; 
 
 @Component({
   selector: 'app-game-board',
@@ -17,9 +17,8 @@ export class GameBoardComponent implements OnInit {
 
   ngOnInit() {
     this.game = new Game(996, 669, AUTO, 'game-board');
-    this.game.state.add('Game', SlipSmart);
-    this.game.state.start('Game');
+    this.game.state.add('SlipSmartGame', new SlipSmartGame(this.game));
+    this.game.state.start('SlipSmartGame');
   }
 
-  
 }
